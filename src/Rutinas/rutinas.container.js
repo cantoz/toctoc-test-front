@@ -2,17 +2,14 @@ import React from "react";
 import './rutinas.styles.css';
 import Back from '../Global/Back/back.component.jsx';
 import Title from '../Global/Title/title.component.jsx';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import { AntSwitch } from './AntSwitch.component.jsx';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import { isNil } from 'ramda';
+import SegundoEjercicio from './segundoEjercicio.component.jsx';
+import PrimerEjercicio from "./primerEjercicio.component.jsx";
 
 function Rutinas(props) {
     const [firstInput, setFirstInput] = React.useState({ value: '', message: null, alertType: 'success', answer: '' });
     const [secondInput, setSecondInput] = React.useState({ value: '', message: null, alertType: 'success' });
     const [isAsc, setAsc] = React.useState(true);
+    const numbers = [1, 3, 6, 90, 39, 4];
 
     const checkNumbers = () => {
         const inputArray = firstInput.value.split(',').map(Number);
@@ -21,13 +18,13 @@ function Rutinas(props) {
         if (!checkInt) {
             setFirstInput({ ...firstInput, message: 'Recuerda, deben ser números separados por comas (,)', alertType: 'error' })
         } else {
-            setFirstInput({ ...firstInput, answer: orderBy(inputArray)});
+            setFirstInput({ ...firstInput, answer: orderBy(inputArray) });
         }
     }
 
     const orderBy = (numArray) => {
         numArray.sort(function (a, b) {
-            if(isAsc){
+            if (isAsc) {
                 return a - b;
             } else {
                 return b - a;
@@ -37,53 +34,42 @@ function Rutinas(props) {
         return numArray.join()
     }
 
+    const searchNumber = (num, compareNum, index) => {
+        if (index < numbers.length + 1) {
+            console.info('Buscando en el index Nº', index);
+            console.info(num + ' vs', compareNum);
+            if (num !== compareNum) {
+                console.info('No coinciden los números');
+                searchNumber(num, numbers[index], index + 1);
+            } else {
+                console.info('Hay match!!');
+                setSecondInput({ ...secondInput, answer: <React.Fragment>El número <b>{num}</b> si existe en el arreglo, en el index <b>Nº{index - 1}</b>!!</React.Fragment> });
+            }
+        } else {
+            console.info('No se encontró el número...');
+            setSecondInput({ ...secondInput, answer: <React.Fragment>El número ingresado no existe en el arreglo...</React.Fragment> });
+        }
+    }
+
     return (
         <div className='rutinas'>
             <Back />
             <Title text='Rutinas' />
-            <div className='col-xs-12 row noHorMargin firstRoutine'>
-                <div className='col-xs-12'>
-                    <Typography className='subtitle' variant='h4' component='p'>
-                        Ordenar números
-                    </Typography>
-                </div>
-                <div className='col-xs-12 col-md-6'>
-                    <TextField
-                        fullWidth
-                        id="outlined-basic"
-                        label="Números a Ordenar"
-                        variant="outlined"
-                        value={firstInput.value}
-                        onChange={(e) => setFirstInput({ ...firstInput, value: e.target.value, message: '', alertType: 'success' })}
-                        error={firstInput.alertType === 'error'}
-                        helperText={isNil(firstInput.message) ? 'Recuerda separar los números por una coma (,)' : firstInput.message}
-                    />
-                </div>
-                <div className='col-xs-12 col-md-6 row noHorMargin middle-xs'>
-                    <div className='col-xs-12 col-md-4'>
-                        <Stack onClick={() => setAsc(!isAsc)} direction="row" spacing={1} alignItems="center">
-                            <Typography>Desc</Typography>
-                            <AntSwitch defaultChecked inputProps={{ 'aria-label': 'ant design' }} />
-                            <Typography>Asc</Typography>
-                        </Stack>
-                    </div>
-                    <div className='col-xs-12 col-md-8'>
-                        <Button
-                            fullWidth
-                            onClick={() => checkNumbers()}
-                            disabled={firstInput.value === ''}
-                            variant="contained">
-                            Ordenar!
-                        </Button>
-                    </div>
-                </div>
-                <div className='col-xs-12'>
-                    <div>&nbsp;</div>
-                    <Typography variant='body' component='p'>
-                        <b>Resultado Ordenado: {firstInput.answer}</b>
-                    </Typography>
-                </div>
-            </div>
+            {/* PRIMER EJERCICIO */}
+            <PrimerEjercicio 
+                isAsc={isAsc}
+                setAsc={setAsc}
+                firstInput={firstInput}
+                checkNumbers={checkNumbers}
+                setFirstInput={setFirstInput} />
+            <div>&nbsp;</div>
+            <hr />
+            <div>&nbsp;</div>
+            {/* SEGUNDO EJERCICIO */}
+            <SegundoEjercicio
+                secondInput={secondInput}
+                searchNumber={searchNumber} 
+                setSecondInput={setSecondInput} />
         </div>
     );
 }

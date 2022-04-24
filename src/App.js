@@ -7,13 +7,15 @@ import {
 import "flexboxgrid2/flexboxgrid2.css";
 import Home from './Home/home.container';
 import Rutinas from './Rutinas/rutinas.container';
+import Graficos from './Graficos/graficos.container';
 
 function App() {
   return (
     <div className="App">
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/rutinas" element={<Rutinas />} />
+          <Route path="/rutinas" element={<Rutinas />} />
+          <Route path="/graficos" element={<Graficos />} />
         </Routes>
     </div >
   );

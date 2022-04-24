@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+# TEST TOCTOC FRONT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto contiene todas las preguntas del test.
+Podrán acceder a ellas desde el home donde se dividen entre 
+Base de Datos (Bancos), Rutinas y el Gráfico que contiene sólo el front.
+El proyecto toctocTest contiene la parte backend del último ejercicio (express, agente, BD)
 
 ## Available Scripts
 
