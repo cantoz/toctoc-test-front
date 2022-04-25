@@ -9,7 +9,7 @@ function Home(props) {
             <Title text='TOC TOC TEST HOME' />
             <div className='row col-xs-12 noHorMargin'>
                 <div className='col-xs-6'>
-                    <Button fullWidth variant="contained">Base de Datos</Button>
+                    <Button onClick={() => window.location.assign('/basedatos')} fullWidth variant="contained">Base de Datos</Button>
                 </div>
                 <div className='col-xs-6'>
                     <Button onClick={() => window.location.assign('/rutinas')} fullWidth variant="contained">Rutinas</Button>
